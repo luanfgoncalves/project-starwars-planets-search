@@ -3,7 +3,7 @@ Este arquivo contém todo tipo de auxilo ao desenvolvimento deste projeto.
 -- Repositórios remotos --
 
   https://github.com/tryber/sd-022-b-project-starwars-planets-search
-  https://github.com/tryber/sd-022-b-project-starwars-planets-search/pull/?? 
+  https://github.com/tryber/sd-022-b-project-starwars-planets-search/pull/62 
 
 -- Linter --
 
@@ -19,6 +19,10 @@ Este arquivo contém todo tipo de auxilo ao desenvolvimento deste projeto.
 
   npm run test-coverage
   npm run test-coverage -- --collectCoverageFrom=src/pages/Login.js
+  
+-- TDD --
+
+  npm test
   
 -- Comandos Git --
 
