@@ -8,6 +8,7 @@ const PlanetsProvider = ({ children }) => {
   // nota: /planetsData/ é o estado global que guarda os dados dos planetas e /setPlanetsData/ é o "setState"  que declara /planetsData/
   const [planetsData, setPlanetsData] = useState([]);
   const [isloading, setLoading] = useState(true);
+  const [filterByName, setNameFilter] = useState({ name: '' }); // estado global que guarda o nome que vai ser aplicado no filto
 
   const getPlanets = async () => {
     setLoading(true);
@@ -24,7 +25,15 @@ const PlanetsProvider = ({ children }) => {
 
   return (
     // nota: dar um nome unico ao provide pra não confundior com a função nativa, não use só /Provider/
-    <PlanetsContext.Provider value={ { planetsData, isloading } }>
+    // nota: na arvore do context todos os componentes são renderizados dentro do /Provider/, recebendo as props passadas aqui
+    <PlanetsContext.Provider
+      value={ {
+        planetsData,
+        isloading,
+        filterByName,
+        setNameFilter,
+      } }
+    >
       {children}
     </PlanetsContext.Provider>
   );
