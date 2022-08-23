@@ -3,36 +3,36 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import fetchApi from '../services/fetchApi';
 import PlanetsContext from './PlanetsContext';
-// import PropTypes from 'prop-types';
 
-PlanetsProvider = (finalData) => {
+const PlanetsProvider = ({ children }) => {
   // nota: /planetsData/ é o estado global que guarda os dados dos planetas e /setPlanetsData/ é o "setState"  que declara /planetsData/
   const [planetsData, setPlanetsData] = useState([]);
+  const [isloading, setLoading] = useState(true);
 
-  // nota: /useEffect/ é a função nativa que
+  const getPlanets = async () => {
+    setLoading(true);
+    const response = await fetchApi();
+    const planets = response.results;
+    setLoading(false);
+    setPlanetsData(planets);
+  };
+
+  // nota: /useEffect/ é a função nativa que faz o cpnt did mount
   useEffect(() => {
-    const getPlanets = async () => {
-      const completeData = await fetchApi();
-      // const planetFilter = (element) => {
-      //   element !== element.residents;
-      // };
-      const filteredData = completeData.filter((data) => data !== data.residents);
-      setPlanetsData(filteredData);
-    };
     getPlanets();
   }, []);
 
   return (
     // nota: dar um nome unico ao provide pra não confundior com a função nativa, não use só /Provider/
-    <PlanetsContext.Provider value={ { planetsData } }>
-      { finalData }
+    <PlanetsContext.Provider value={ { planetsData, isloading } }>
+      {children}
     </PlanetsContext.Provider>
   );
 };
 
 PlanetsProvider.propTypes = {
-  finalData: PropTypes.node.isRequired,
-};
+  children: PropTypes.node,
+}.isRequired;
 
 export default PlanetsProvider;
 

@@ -1,6 +1,15 @@
-export default fetchApi = async (endpoint) => {
+// fetchApi = async () => {
+//   const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
+//   const response = await fetch(URL);
+//   const data = await response.json();
+//   return data;
+// };
+
+async function fetchApi() {
   const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
-  response = await fetch(URL`${endpoint}`);
-  data = await response.json();
+  const response = await fetch(URL);
+  const data = await response.json();
   return data;
-};
+}
+
+export default fetchApi;
