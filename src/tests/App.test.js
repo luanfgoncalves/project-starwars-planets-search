@@ -194,7 +194,7 @@ describe('testa se o App possui os elementos e comportamentos esperados', () => 
       userEvent.selectOptions(comparisonFilter, 'menor que');
       userEvent.type(valueFilter, 8); // erro
       userEvent.click(buttonFilter);
-      expect(planet).toBeInTheDocument();
+      expect(bespin).toBeInTheDocument();
     });
   });
 
