@@ -3,8 +3,8 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import PlanetsContext from '../context/PlanetsContext';
 
-const Table = () => {
-  const { planetsData } = useContext(PlanetsContext);
+function Table() {
+  const { planetsList } = useContext(PlanetsContext);
   const { filterByName } = useContext(PlanetsContext);
   // const nameCondition = ({ name }) => {
   //   name.toLowerCase().includes(filterByName.name.toLowerCase());
@@ -13,7 +13,6 @@ const Table = () => {
 
   return (
     <table>
-
       <thead>
         <tr>
           <th>Name</th>
@@ -31,13 +30,12 @@ const Table = () => {
           <th>URL</th>
         </tr>
       </thead>
-
       <tbody>
         {/* {planetsData.map((element) => ( */}
         {/* {planetsData.filter(nameCondition).map((element) => ( */}
-        {planetsData.filter(({ name }) => name.toLowerCase().includes(nmLow)).map((e) => (
+        {planetsList.filter(({ name }) => name.toLowerCase().includes(nmLow)).map((e) => (
           <tr key={ e.name }>
-            <td>{e.name}</td>
+            <td data-testid="planet-name">{e.name}</td>
             <td>{e.rotation_period}</td>
             <td>{e.orbital_period}</td>
             <td>{e.diameter}</td>
@@ -53,10 +51,9 @@ const Table = () => {
           </tr>
         ))}
       </tbody>
-
     </table>
   );
-};
+}
 
 Table.propTypes = {
   planetsData: PropTypes.node,

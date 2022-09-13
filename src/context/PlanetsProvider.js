@@ -1,50 +1,91 @@
 import React, { useEffect, useState } from 'react';
 // import { Children } from 'react';
 import PropTypes from 'prop-types';
-import fetchApi from '../services/fetchApi';
 import PlanetsContext from './PlanetsContext';
+import fetchApi from '../services/fetchApi';
 
-const PlanetsProvider = ({ children }) => {
-  // nota: /planetsData/ é o estado global que guarda os dados dos planetas e /setPlanetsData/ é o "setState"  que declara /planetsData/
+function PlanetsProvider({ children }) {
   const [planetsData, setPlanetsData] = useState([]);
   const [isloading, setLoading] = useState(true);
-  const [filterByName, setNameFilter] = useState({ name: '' }); // estado global que guarda o nome que vai ser aplicado no filto
+  const [planetsList, setPlanetsList] = useState([]);
+  const [filterByName, setFilter] = useState({ name: '' });
+  const [filterByNumericValues, setFilterByNumericValues] = useState([]);
+  const [sorting, setSorting] = useState({ select: 'population', sorting: false });
+  const [sortColumn] = useState(['population', 'orbital_period', 'diameter',
+    'rotation_period', 'surface_water']);
+  const [handleChangeFilter, setHandleChangeFilter] = useState({ column: 'population',
+    comparison: 'maior que',
+    value: 0 });
+  const [selectOptions, setSelectOptions] = useState(['population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water']);
 
   const getPlanets = async () => {
     setLoading(true);
+    console.log('APi foi chamada');
     const response = await fetchApi();
     const planets = response.results;
     setLoading(false);
     setPlanetsData(planets);
+    setPlanetsList(planets);
+    console.log(`PlanetData:${planetsData} PlanetList${planetsList}`);
   };
 
-  // nota: /useEffect/ é a função nativa que faz o cpnt did mount
+  // const setComparisonFilter = () => {
+  // console.log('filtro de comparação foi chamado');
+  // const newData = [...planetsData];
+  // }
+
   useEffect(() => {
     getPlanets();
   }, []);
 
+  useEffect(() => {
+    // const newData = [...planetsData];
+    let newData = [...planetsData];
+    const filteredData = [...filterByNumericValues];
+    filteredData.forEach((item) => {
+      if (item.comparison === 'maior que') {
+        newData = newData.filter((e) => Number(e[item.column]) > Number(item.value));
+        console.log('Filtro /Maior que/ foi selecionado');
+      } if (item.comparison === 'menor que') {
+        newData = newData.filter((e) => Number(e[item.column]) < Number(item.value));
+        console.log('Filtro /Menor que/ foi selecionado');
+      } if (item.comparison === 'igual a') {
+        newData = newData.filter((e) => Number(e[item.column]) === Number(item.value));
+        console.log('Filtro /Igual a/ foi selecionado');
+      }
+    });
+    setPlanetsList(newData);
+  }, [planetsData, filterByNumericValues]);
+
+  const valueContext = {
+    planetsData,
+    isloading,
+    filterByName,
+    setFilter,
+    filterByNumericValues,
+    setFilterByNumericValues,
+    setPlanetsData,
+    planetsList,
+    setPlanetsList,
+    sorting,
+    setSorting,
+    sortColumn,
+    handleChangeFilter,
+    setHandleChangeFilter,
+    selectOptions,
+    setSelectOptions,
+  };
+
   return (
-    // nota: dar um nome unico ao provide pra não confundior com a função nativa, não use só /Provider/
-    // nota: na arvore do context todos os componentes são renderizados dentro do /Provider/, recebendo as props passadas aqui
-    <PlanetsContext.Provider
-      value={ {
-        planetsData,
-        isloading,
-        filterByName,
-        setNameFilter,
-      } }
-    >
+    <PlanetsContext.Provider value={ valueContext }>
       {children}
     </PlanetsContext.Provider>
   );
-};
+}
 
 PlanetsProvider.propTypes = {
   children: PropTypes.node,
 }.isRequired;
 
 export default PlanetsProvider;
-
-// Referência: https://stackoverflow.com/questions/50206801/what-is-the-difference-between-proptypes-node-and-proptypes-any-in-react
-
-// https://pt-br.reactjs.org/docs/hooks-effect.html

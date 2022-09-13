@@ -39,3 +39,90 @@
     transform: rotate(360deg);
   }
 }
+
+/* Meu CSS */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&family=Montserrat&display=swap') ;
+
+.classe-que-corrige-bug-do-lint-pqp-trybe {
+  margin: 0;
+}
+
+* {
+  color: bisque;
+  font-family: Roboto , Epilogue , sans-serif;
+  font-size: 0.9rem;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  align-self: center;
+  background-color: #070707;
+  box-sizing: border-box;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  width: 100vw;
+  z-index: -1;
+}
+
+button {
+  background-color: #a9d62d;
+  border-color: #838102;
+  border-radius: 12px;
+  color: rgb(78, 71, 1);
+  font-size: 0.9rem;
+  font-weight: 500;
+  height: 25px;
+  margin: 4px;
+  padding: 4px;
+}
+
+button:hover {
+  box-shadow: var(--shadow-2);
+  filter: brightness(110%);
+  transform: scale(1.1);
+}
+
+button:active {
+  box-shadow: var(--shadow-3);
+}
+
+button:disabled {
+  color: white;
+  cursor: wait;
+  opacity: 0.5;
+}
+
+input {
+  background-color: #070707;
+  border-color: #838102;
+  border-radius: 12px;
+  font-size: 1 rem;
+  height: 12px;
+  margin-bottom: 2px;
+  padding: 0.4rem 0.95rem;
+  width: 15vw;
+}
+
+select {
+  background-color: #070707;
+  border-color: #838102;
+  border-radius: 12px;
+  height: 25px;
+}
+
+thead {
+  background-color: #282c34;
+  border: 2px;
+  border-color: #838102;
+}
+
+th {
+  background-color: #4b4b4b;
+}
+
+td {
+  background-color: #5a5a5a;
+}
